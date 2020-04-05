@@ -7,26 +7,75 @@ for t in range(1,T+1):
 
 	R.append([])
 	N = int(stdin.readline().strip()) # número de atividades até 100
-	I = list()
 	P = list()
-
-	for n in range(1,N+1):
-
-		i = [int(s) for s in stdin.readline().split(" ")] # intervalo da atividade
-		I.append(range(i[0],i[1]+1))
+	I = list()
 
 	for n in range(0,N):
-		if n != 0:
-			if len(set(list(I[n][:]).append(I[n-1][:]))) == len(list(I[n][:]).append(I[n-1][:])):
-				P.append(P[n-1])
-			if len(set(list(I[n][:]).append(I[n-1][:]))) != len(list(I[n][:]).append(I[n-1][:])):	
-				if P[n-1] == 'C':
-					P.append('J')
-				if P[n-1] == 'J':
+
+		i = [int(s) for s in stdin.readline().split(" ")] # intervalo da atividade
+		I.append(list(range(i[0],i[1]+1)))
+
+	try:
+
+		try:
+
+			C = list(range(0,1141))
+			J = list(range(0,1141))
+
+			for n in range(0,N):
+
+				try:
+
+					for i in range(len(I[n])):
+						if i == 0 and I[n][i]+1 in C:
+							pass 
+						else:
+							C.remove(I[n][i])
 					P.append('C')
 
+				except ValueError:
+
+					for i in range(len(I[n])):
+						if i == 0 and I[n][i]+1 in J:
+							pass 
+						else:
+							J.remove(I[n][i])
+					P.append('J')
+
+		except ValueError:
+
+			C = list(range(0,1141))
+			J = list(range(0,1141))
+
+			for n in range(0,N):
+
+				try:
+
+					for i in range(len(I[n])):
+						if i == 0 and I[n][i]+1 in J:
+							pass 
+						else:
+							J.remove(I[n][i])
+					P.append('J')
+
+				except ValueError:
+
+					for i in range(len(I[n])):
+						if i == 0 and I[n][i]+1 in C:
+							pass
+						else:
+							C.remove(I[n][i])
+					P.append('C')
+
+	except:
+		if len(P) >= N:
+			pass
+		else:
+			P.clear()
+			P.append('IMPOSSIBLE')
+
 	R[t-1].append(t)
-	R[t-1].append(' '.join(P))
+	R[t-1].append(''.join(P))
 			
 for i in range(len(R)):
     print("Case #{0}: {1}".format(R[i][0], R[i][1]))
